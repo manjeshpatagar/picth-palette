@@ -9,6 +9,7 @@ const ProductItem = ({ product, onClick }) => {
         <div className="product-name">
           <h2>{product.name}</h2>
           <h6>{product.description}</h6>
+          <div> hi</div>
         </div>
       </div>
     </button>
