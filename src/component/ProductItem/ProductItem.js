@@ -1,14 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const ProductItem = ({ product, onClick }) => {
+const ProductItem = ({ product, onClick,selectedProduct }) => {
+
   return (
-    <button onClick={() => onClick(product.id)} className="product-button">
+    <button onClick={() => onClick(product.id)} className={`product-button ${selectedProduct === product.id ? 'active_id': ''}`}>
       <div className="product-item">
-        <div className="product-profile"></div>
+        <img
+          style={{
+            width: "3rem",
+            height: "3rem",
+            borderRadius: "25px",
+            border: "1px solid black",
+          }}
+          src={product?.img}
+        />
         <div className="product-name">
-          <h2>{product.name}</h2>
-          <h6>{product.description}</h6>
+          <h2>{product?.name}</h2>
+          <h6>{product?.description}</h6>
         </div>
       </div>
     </button>
