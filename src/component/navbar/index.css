@@ -1,0 +1,108 @@
+.container {
+    display: flex;
+  }
+  
+  .header-logo {
+    text-align: center;
+    border-bottom: 2px solid #e6e6e6;
+  }
+  
+  .sidebar {
+    width: 300px;
+    padding: 22px;
+    background-color: #ebebeb69;
+    border-radius: 31px;
+    margin: 13px;
+    height: 600px;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 1px solid #00000029;
+    border-radius: 20px;
+    background: #ffffff;
+    height: 48px;
+    margin-top: 15px;
+  }
+  
+  .search-bar input {
+    flex-grow: 1;
+    padding: 8px;
+    border: none;
+    background: none;
+  }
+  
+  .search-button, .audio-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  
+  .search-button img, .audio-button img {
+    width: 21px;
+    height: 21px;
+    padding-top: 10px;
+    margin-left: -13px;
+  }
+  
+  .product-list {
+    border: 1px solid transparent;
+    border-radius: 32px;
+    width: 298px;
+    height: 515px;
+    background: white;
+    padding-top: 27px;
+  }
+  
+  .sidebar button {
+    border-radius: 26px;
+    padding: 10px;
+    margin-bottom: 7px;
+    color: black;
+    border: none;
+    cursor: pointer;
+    width: 267px;
+    height: 68px;
+    margin-left: 16px;
+  }
+  
+  .product-item {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .product-profile {
+    border-radius: 23px;
+    width: 45px;
+    height: 50px;
+    background: #5454549c;
+  }
+  
+  .product-name {
+    margin-left: -16px;
+  }
+  
+  .product-name h2 {
+    margin: 6px 0 -13px -22px;
+  }
+  
+  .product-name h6 {
+    font-size: 12px;
+    color: #00000085;
+    margin-top: 15px;
+  }
+  
+  .content {
+    padding: 20px;
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .search-bar input:focus {
+    border-color: navy;
+    outline: none;
+  }
+  
