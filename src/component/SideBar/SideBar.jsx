@@ -62,6 +62,7 @@ const SideBar = () => {
                                     <div className="top_side_content">
                                         {item?.icon}
                                     </div>
+                                    <div>hi</div>
                                 </div>
                             )
                         })
