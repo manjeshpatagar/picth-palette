@@ -3,7 +3,7 @@ import "./index.css";
 import audioIcon from "./images/audio.png";
 import searchIcon from "./images/searchbar.png";
 import pitch from "./images/pitch.png";
-import ProductItem from "../ProductItem/ProductItem"; 
+import ProductItem from "../ProductItem/ProductItem";
 
 const Navbar = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -11,7 +11,9 @@ const Navbar = () => {
   const renderContent = () => {
     return (
       <div>
-        {selectedProduct ? `No product Loaded for ${selectedProduct}` : "Please select a product."}
+        {selectedProduct
+          ? `No product Loaded for ${selectedProduct}`
+          : "Please select a product."}
       </div>
     );
   };
@@ -20,13 +22,22 @@ const Navbar = () => {
     { id: "product1", name: "Tv", description: "Product description" },
     { id: "product2", name: "Mobile", description: "Product description" },
     { id: "product3", name: "Fridge", description: "Product description" },
-    { id: "product4", name: "Washingmachine", description: "Product description" },
+    {
+      id: "product4",
+      name: "Washingmachine",
+      description: "Product description",
+    },
     { id: "product5", name: "Computer", description: "Product description" },
     { id: "product6", name: "Headphone", description: "Product description" },
   ];
 
   return (
-    <div className="container">
+    <div
+      className="container"
+      style={{
+        marginLeft: "5rem",
+      }}
+    >
       <div className="sidebar">
         <div className="header-logo">
           <img src={pitch} alt="Pitch" />
@@ -42,7 +53,11 @@ const Navbar = () => {
         </div>
         <div className="product-list">
           {products.map((product) => (
-            <ProductItem key={product.id} product={product} onClick={setSelectedProduct} />
+            <ProductItem
+              key={product.id}
+              product={product}
+              onClick={setSelectedProduct}
+            />
           ))}
         </div>
       </div>
@@ -52,5 +67,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
