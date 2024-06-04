@@ -10,6 +10,7 @@ import { PiNotepad } from "react-icons/pi";
 import { TbSettings2 } from "react-icons/tb";
 import { LuPlug } from "react-icons/lu";
 import { FaUserSecret } from "react-icons/fa";
+import image from '../navbar/images/pitch.png'
 
 const SideBar = () => {
     const iconLists = [
@@ -49,6 +50,10 @@ const SideBar = () => {
     }
     return (
         <div className="side_bar">
+            <div className="header_section">
+                <img src={image} alt="" 
+                />
+            </div>
             <div className="side_bar_content">
                 <div className="top_side">
                     {
@@ -62,7 +67,6 @@ const SideBar = () => {
                                     <div className="top_side_content">
                                         {item?.icon}
                                     </div>
-                                    <div>hi</div>
                                 </div>
                             )
                         })
@@ -70,6 +74,7 @@ const SideBar = () => {
                 </div>
                 <div className="bottom_side"><FaUserSecret /></div>
             </div>
+            
         </div>
     )
 }

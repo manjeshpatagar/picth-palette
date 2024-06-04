@@ -1,6 +1,10 @@
 .container {
     display: flex;
+    width: 100% !important;
     background-color: #f5f5fa;
+    height: 92vh;
+    overflow: hidden;
+    border-radius: 10px;
   }
   
   .header-logo {
@@ -9,25 +13,28 @@
   }
   
   .sidebar {
-    width: 300px;
+    width: 450px;
     padding: 22px;
     border-radius: 31px;
     margin: 13px;
-    height: 600px;
+    min-height: 100vh;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: overlay;
   }
   
   .search-bar {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-    border: 1px solid #00000029;
-    border-radius: 20px;
+    margin-bottom: 15px;
+    border: 1px solid #00000014;
+    border-radius: 14px;
     background: #ffffff;
     height: 45px;
-    margin-top: 15px;
-    margin-left: 18px;
-    width: 369px;
-    height: 48px;
+    /* margin-top: -3px;
+    margin-left: -2px; */
+    /* width: 371px; */
+    height: 74px;
   }
   
   .search-bar input {
@@ -35,6 +42,7 @@
     padding: 8px;
     border: none;
     background: none;
+    padding-right: 30px;
   }
   
   .search-button, .audio-button {
@@ -44,30 +52,38 @@
     padding: 8px;
   }
   
-  .search-button img, .audio-button img {
-    width: 24px;
-    height: 24px;
-    padding-top: 1px;
-    margin-left: -3px;
+  .search-button img{
+    width: 31px;
+    height: 32px;
+    padding-top: 3px;
+    margin-left: 6px;
+  }
+  .audio-button img {
+    width: 28px;
+    height: 27px;
+    padding-top: 3px;
+    margin-left: -34px;
   }
   
   .product-list {
     border: 1px solid transparent;
     border-radius: 32px;
-    width: 298px;
-    height: 515px;
-    padding-top: 27px;
+    width: 100%;
+    /* width: 298px;
+    height: 515px; */
+    margin-top: -6px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
   
   .sidebar button {
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 10px;
-    margin-bottom: 15px;
     color: black;
+    width: 100%;
     cursor: pointer;
-    width: 370px;
-    height: 78px;
-    margin-left: 16px;
+    margin-left: -2px;
     background: #ffffff;
     border: 1px solid rgb(214 210 210 / 43%);
   }
@@ -75,20 +91,23 @@
   .product-item {
     display: flex;
     gap: 30px;
+    align-items: center;
+    padding: 8px;
   }
     
   .product-name {
-    margin-left: -16px;
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
   
   .product-name h2 {
-    margin: 6px 0 -13px 2px;
   }
   
   .product-name h6 {
     font-size: 13px;
     color: #00000085;
-    margin-top: 15px;
   }
    
  .active_id .product-name {

@@ -7,6 +7,7 @@ const App = () => {
     <div
       style={{
         display: "flex",
+        overflow:"hidden"
       }}
     >
       <SideBar />

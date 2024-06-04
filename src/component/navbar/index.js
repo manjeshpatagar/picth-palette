@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./index.css";
 import audioIcon from "./images/audio.png";
 import searchIcon from "./images/searchbar.png";
-import pitch from "./images/pitch.png";
 import ProductItem from "../ProductItem/ProductItem";
 
 import book from "./images/book.png";
@@ -14,7 +13,7 @@ import headphone from "./images/headphone.png";
 
 
 const Navbar = () => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(1);
 
 
   const renderContent = () => {
@@ -29,46 +28,91 @@ const Navbar = () => {
 
   const products = [
     {
-      id: "product1",
+      id: 1,
       img: book,
       name: "Book",
       description: "Product description",
     },
     {
-      id: "product2",
+      id: 2,
       name: "Computer",
       img: computer,
       description: "Product description",
     },
     {
-      id: "product3",
+      id: 3,
       name: "Fridge",
       img: fridge,
       description: "Product description",
     },
     {
-      id: "product4",
+      id: 4,
       name: "Headphone",
       img: headphone,
       description: "Product description",
     },
     {
-      id: "product5",
+      id: 5,
       name: "Mobile",
       img: mobile,
       description: "Product description",
     },
-
-    { id: "product1", name: "Tv", description: "Product description" },
-    { id: "product2", name: "Mobile", description: "Product description" },
-    { id: "product3", name: "Fridge", description: "Product description" },
     {
-      id: "product4",
-      name: "Washingmachine",
-      description: "Product description",
-    },
-    { id: "product5", name: "Computer", description: "Product description" },
-    { id: "product6", name: "Headphone", description: "Product description" },
+        id: 6,
+        img: book,
+        name: "Book",
+        description: "Product description",
+      },
+      {
+        id: 7,
+        name: "Computer",
+        img: computer,
+        description: "Product description",
+      },
+      {
+        id: 8,
+        name: "Fridge",
+        img: fridge,
+        description: "Product description",
+      },
+      {
+        id:9,
+        name: "Headphone",
+        img: headphone,
+        description: "Product description",
+      },
+      {
+        id:10,
+        name: "Mobile",
+        img: mobile,
+        description: "Product description",
+      },
+      {
+        id:11,
+        name: "Fridge",
+        img: fridge,
+        description: "Product description",
+      },
+      {
+        id:12,
+        name: "Headphone",
+        img: headphone,
+        description: "Product description",
+      },
+      {
+        id:13,
+        name: "Mobile",
+        img: mobile,
+        description: "Product description",
+      },
+      {
+        id:14,
+        name: "Fridge",
+        img: fridge,
+        description: "Product description",
+      },
+     
+
   ];
 
 
@@ -76,13 +120,12 @@ const Navbar = () => {
     <div
       className="container"
       style={{
-        marginLeft: "5rem",
+        margin: "5rem 0 0 5rem",
+        width:"100%"
       }}
     >
       <div className="sidebar">
-        <div className="header-logo">
-          <img src={pitch} alt="Pitch" />
-        </div>
+        
         <div className="search-bar">
           <div className="search-button">
             <img src={searchIcon} alt="Search" />
@@ -95,14 +138,10 @@ const Navbar = () => {
         <div className="product-list">
           {products.map((product) => (
             <ProductItem
-
-              key={product?.id}
-              product={product}
-              onClick={setSelectedProduct}
               selectedProduct={selectedProduct}
               key={product.id}
               product={product}
-              onClick={setSelectedProduct}
+              setSelectedProduct={setSelectedProduct}
             />
           ))}
         </div>

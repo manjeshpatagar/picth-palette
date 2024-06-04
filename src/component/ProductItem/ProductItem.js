@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const ProductItem = ({ product, onClick,selectedProduct }) => {
+const ProductItem = ({ product, setSelectedProduct,selectedProduct }) => {
 
   return (
-    <button onClick={() => onClick(product.id)} className={`product-button ${selectedProduct === product.id ? 'active_id': ''}`}>
+    <button onClick={() => setSelectedProduct(product.id)} className={`product-button ${selectedProduct === product.id ? 'active_id': ''}`}>
       <div className="product-item">
         <img
           style={{
@@ -16,8 +16,14 @@ const ProductItem = ({ product, onClick,selectedProduct }) => {
           src={product?.img}
         />
         <div className="product-name">
-          <h2>{product?.name}</h2>
-          <h6>{product?.description}</h6>
+          <div style={{
+            fontSize:'18px',
+            fontWeight:'600'
+          }}>{product?.name}</div>
+          <div
+          style={{
+            opacity:"0.7"
+          }}>{product?.description}</div>
         </div>
       </div>
     </button>
