@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "./index.css";
-import audioIcon from "./images/audio.png";
 import searchIcon from "./images/searchbar.png";
 import ProductItem from "../ProductItem/ProductItem";
-
 import book from "./images/book.png";
 import computer from "./images/computer.png";
 import mobile from "./images/mobile.png";
@@ -131,9 +129,6 @@ const Navbar = () => {
             <img src={searchIcon} alt="Search" />
           </div>
           <input type="text" />
-          <div className="audio-button">
-            <img src={audioIcon} alt="Audio" />
-          </div>
         </div>
         <div className="product-list">
           {products.map((product) => (

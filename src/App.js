@@ -1,18 +1,16 @@
 import React from "react";
-import Navbar from "./component/navbar";
-import SideBar from "./component/SideBar/SideBar";
+import Login from "./component/Login";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
 
 const App = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        overflow:"hidden"
-      }}
-    >
-      <SideBar />
-      <Navbar />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
