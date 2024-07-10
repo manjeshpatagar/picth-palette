@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import "./index.css";
 import loginlogo from "./images/loginlogo.png";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -12,7 +13,40 @@ const Login = () => {
     event.preventDefault();
     console.log('Email:', email);
     console.log('Password:', password);
-  };
+
+    const loginData = {
+      // "username": "ameya@gmail.com",
+      // "password": "Password@1"
+      "username": email,
+      "password": password
+    };
+
+    fetch('https://01036p2kcg.execute-api.ap-south-1.amazonaws.com/dev/login', {
+      method: 'POST',
+      headers: {
+        // 'Content-Type': 'application/json',
+        // Include other headers if necessary
+      },
+      body: JSON.stringify(loginData)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Handle the response data
+        console.log('Success:', JSON.parse(data.body).IdToken);
+        localStorage.setItem("token", JSON.parse(data.body).IdToken)
+        navigate('/');
+      })
+      .catch(error => {
+        // Handle any errors that occurred during the fetch
+        console.error('Error:', error);
+      });
+  }
+
 
   return (
     <div className="login-page">
@@ -44,8 +78,8 @@ const Login = () => {
               required
             />
           </div>
-          <div style={{textAlign:"center"}}>
-          <a href="#" class="forgot-password">Forgot Password?</a>
+          <div style={{ textAlign: "center" }}>
+            <a href="#" class="forgot-password">Forgot Password?</a>
 
           </div>
           <div className="form-group">
@@ -55,17 +89,17 @@ const Login = () => {
         <div className="signup-option">
           Don't have an account? <a href="#">Sign Up</a>
         </div>
-        <div style={{textAlign:"center",fontSize:"20px",color:"#000000b0",paddingTop:"10px"}}>or</div>
+        {/* <div style={{ textAlign: "center", fontSize: "20px", color: "#000000b0", paddingTop: "10px" }}>or</div>
         <div className="login-options d-flex flex-column gap-2">
-      <button className="btn btn-primary facebook-login d-flex align-items-center">
-        <i className="bi bi-facebook me-2"></i>
-        Login with Facebook
-      </button>
-      <button className="btn btn-danger google-login d-flex align-items-center">
-        <i className="bi bi-google me-2"></i>
-        Login with Google
-      </button>
-    </div>
+          <button className="btn btn-primary facebook-login d-flex align-items-center">
+            <i className="bi bi-facebook me-2"></i>
+            Login with Facebook
+          </button>
+          <button className="btn btn-danger google-login d-flex align-items-center">
+            <i className="bi bi-google me-2"></i>
+            Login with Google
+          </button>
+        </div> */}
       </div>
     </div>
   );
