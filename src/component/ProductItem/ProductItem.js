@@ -1,10 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const ProductItem = ({ product, setSelectedProduct, selectedProduct }) => {
+const ProductItem = ({ product, setSelectedProduct, selectedProduct, canvasRef }) => {
 
   return (
-    <button onClick={() => setSelectedProduct(product.id)} className={`product-button ${selectedProduct === product.id ? 'active_id' : ''}`}>
+    <button onClick={async () => {
+
+
+      // if (canvasRef.current) {
+      //   const canvas = canvasRef.current;
+      //   canvas.style.display = 'none'
+      // }
+      await new Promise((resolve) => setTimeout(() => resolve(''), 1200))
+      setSelectedProduct(product.id)
+
+      // if (canvasRef.current) {
+      //   const canvas = canvasRef.current;
+      //   canvas.style.display = 'block'
+      // }
+    }} className={`product-button ${selectedProduct === product.id ? 'active_id' : ''}`}>
       <div className="product-item">
         {/* <img
           style={{
@@ -21,10 +35,6 @@ const ProductItem = ({ product, setSelectedProduct, selectedProduct }) => {
             fontWeight: '600',
             textTransform: "capitalize"
           }}>{product?.name}</div>
-          <div
-            style={{
-              opacity: "0.7"
-            }}>{"product?.description"}</div>
         </div>
       </div>
     </button>

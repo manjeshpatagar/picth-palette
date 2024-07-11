@@ -8,8 +8,8 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleLogin = (event) => {
+  const [errorMsg, setErrorMsg] = useState('')
+  const handleLogin = async (event) => {
     event.preventDefault();
     console.log('Email:', email);
     console.log('Password:', password);
@@ -30,12 +30,26 @@ const Login = () => {
       body: JSON.stringify(loginData)
     })
       .then(response => {
+        if (response.status >= 500) {
+          setErrorMsg('Unable to assist you right now. Please contact admin...')
+        }
+        if (response.status >= 400) {
+          setErrorMsg('Incorrect username or password')
+        }
         if (!response.ok) {
           throw new Error('Network response was not ok ' + response.statusText);
         }
         return response.json();
       })
       .then(data => {
+        if (data.statusCode >= 500) {
+          setErrorMsg('Unable to assist you right now. Please contact admin...')
+          return
+        }
+        if (data.statusCode >= 400) {
+          setErrorMsg('Incorrect username or password')
+          return
+        }
         // Handle the response data
         console.log('Success:', JSON.parse(data.body).IdToken);
         localStorage.setItem("token", JSON.parse(data.body).IdToken)
@@ -85,10 +99,12 @@ const Login = () => {
           <div className="form-group">
             <button type="submit">Login</button>
           </div>
+
         </form>
         <div className="signup-option">
           Don't have an account? <a href="#">Sign Up</a>
         </div>
+        <p style={{ textAlign: 'center', color: 'red', }}>{errorMsg}</p>
         {/* <div style={{ textAlign: "center", fontSize: "20px", color: "#000000b0", paddingTop: "10px" }}>or</div>
         <div className="login-options d-flex flex-column gap-2">
           <button className="btn btn-primary facebook-login d-flex align-items-center">
@@ -100,8 +116,9 @@ const Login = () => {
             Login with Google
           </button>
         </div> */}
-      </div>
-    </div>
+      </div >
+    </div >
+
   );
 };
 
