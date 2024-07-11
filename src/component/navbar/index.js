@@ -12,31 +12,48 @@ import mobile from "./images/mobile.png";
 import fridge from "./images/fridge.png";
 import headphone from "./images/headphone.png";
 
+import { useNavigate } from 'react-router-dom';
 
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   const [selectedProduct, setSelectedProduct] = useState();
   const [products, setProducts] = useState([]);
   const [tmpProducts, settmpProducts] = useState([]);
   const meshRef = useRef()
+  const intervalRef = useRef({ currentId: null, previousId: null })
+
+  useEffect(() => {
+    // if (selectedProduct) navigate(`/${selectedProduct}`, { replace: true });
+    console.log('selectedProduct::: ', selectedProduct)
+    if (intervalRef.current.previousId !== null) {
+      clearInterval(intervalRef.current.previousId)
+    }
+  }, [selectedProduct])
+
   const renderContent = (product) => {
     return (
       <div>
         {selectedProduct
           ? <div>
-            Product:{(JSON.stringify(product.s3path))}
+            {/* Product:{(JSON.stringify(product.s3path))} */}
             {
               <Suspense fallback={<div>Loading</div>}>
-
+                <div style={{ textAlign: 'left' }}>
+                  <p><strong>Title:</strong> {product?.name}</p>
+                  <p><strong>Description:</strong> {product?.description}</p>
+                </div>
                 <Canvas style={{ width: 600, height: 500, border: '1px solid red' }}>
                   <ambientLight intensity={Math.PI / 5} />
                   <spotLight position={[0, -100, -300]} angle={0.10} penumbra={1} decay={0} intensity={Math.PI} />
                   <pointLight position={[0, -100, -300]} decay={0} intensity={Math.PI} />
                   {/* <Box position={[0, 0, -100]} /> */}
-                  <Scene position={[0, -0, -50]} path={product.s3path} />
+                  <Scene position={[product?.["3dConfig"]?.x ?? 0.1, product?.["3dConfig"]?.y ?? -170, product?.["3dConfig"]?.z ?? -340]}
+                    path={product.s3path} scale={product?.["3dConfig"]?.scale ?? 0.5} />
 
                 </Canvas>
-                <div>
+                {/* <div>
                   <button onClick={e => { meshRef.current.rotation.x += 0.01 }}>+</button>
                   <button onClick={e => { meshRef.current.rotation.x -= 0.01 }}>-</button>
                   <button onClick={e => { meshRef.current.position.z -= 10 }}>z</button>
@@ -44,7 +61,7 @@ const Navbar = () => {
                   <button onClick={e => { meshRef.current.position.y -= 10 }}>y</button>
                   <button onClick={e => { meshRef.current.rotation.x -= 0.01 }}>-</button>
 
-                </div>
+                </div> */}
               </Suspense>
             }
           </div>
@@ -67,7 +84,14 @@ const Navbar = () => {
 
     })
       .then(response => {
+        if (response.status === 401) {
+          clearInterval(intervalRef.current.currentId)
+          clearInterval(intervalRef.current.previousId)
+          navigate('/login')
+        }
         if (!response.ok) {
+          clearInterval(intervalRef.current.currentId)
+          clearInterval(intervalRef.current.previousId)
           throw new Error('Network response was not ok ' + response.statusText);
         }
         return response.json();
@@ -89,22 +113,26 @@ const Navbar = () => {
 
     // const fbx = useLoader(FBXLoader, "/cot.fbx")//'https://pitch-palette-3d-assets.s3.ap-south-1.amazonaws.com/Trolley.FBX'
     const fbx = useLoader(FBXLoader, props.path)//'https://pitch-palette-3d-assets.s3.ap-south-1.amazonaws.com/Trolley.FBX'
-
-    setInterval(() => {
+    intervalRef.current.previousId = intervalRef.current.currentId
+    const intervalId = setInterval(() => {
       // meshRef.current.rotation.x += 0.01
       // if (meshRef.current?.rotation?.y)
       try {
-
-        meshRef.current.rotation.y += 0.01
+        if (meshRef?.current && meshRef.current?.rotation)
+          meshRef.current.rotation.y += 0.01
         // meshRef.current.rotation.x += 0.01
       } catch (e) {
         console.log(e)
+        clearInterval(intervalId)
       }
+      intervalRef.current.currentId = intervalId
       // console.log('ll')
     }, 100)
     return (
-
-      <primitive   {...props} scale={0.5} ref={meshRef} object={fbx} />
+      <>
+        {props.path &&
+          <primitive   {...props} scale={0.5} ref={meshRef} object={fbx} />}
+      </>
 
     )
 
@@ -201,7 +229,7 @@ const Navbar = () => {
   ];
 
   useEffect(() => {
-    settmpProducts([...products, { id: 1, name: "pot", s3path: "/pot.fbx" }])
+    settmpProducts([...products, { id: 1, name: "pot", s3path: "/pot.fbx", description: "flower pot. Show plant!!!" }])
   }, [products])
   return (
 
@@ -215,7 +243,7 @@ const Navbar = () => {
       <div className="sidebar">
 
         <div className="product-list">
-          {JSON.stringify([...products, { id: 1, name: "pot", s3path: "/pot.fbx" }])}
+          {/* {JSON.stringify([...products, { id: 1, name: "pot", s3path: "/pot.fbx" }])} */}
           {tmpProducts.map((product) => (
             <ProductItem
               selectedProduct={selectedProduct}
