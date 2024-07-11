@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import Spinner from 'react-bootstrap/Spinner';
+
 
 const ProductItem = ({ product, setSelectedProduct, selectedProduct }) => {
-
+  const [isLoading, setIsLoading] = useState(false)
   return (
-    <button onClick={() => setSelectedProduct(product.id)} className={`product-button ${selectedProduct === product.id ? 'active_id' : ''}`}>
+    <button onClick={async () => {
+      setIsLoading(true)
+      await new Promise((resolve) => setTimeout(() => resolve(''), 1200))
+      setSelectedProduct(product.id)
+      setIsLoading(false)
+    }} className={`product-button ${selectedProduct === product.id ? 'active_id' : ''}`}>
       <div className="product-item">
         {/* <img
           style={{
@@ -21,11 +28,14 @@ const ProductItem = ({ product, setSelectedProduct, selectedProduct }) => {
             fontWeight: '600',
             textTransform: "capitalize"
           }}>{product?.name}</div>
-          <div
+          {/* <div
             style={{
               opacity: "0.7"
-            }}>{"product?.description"}</div>
+            }}>{"product?.description"}</div> */}
         </div>
+        {isLoading && <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>}
       </div>
     </button>
   );
