@@ -25,7 +25,7 @@ const Navbar = () => {
   const intervalRef = useRef({ currentId: null, previousId: null })
 
   useEffect(() => {
-    // if (selectedProduct) navigate(`/${selectedProduct}`, { replace: true });
+    if (selectedProduct) navigate(`/${selectedProduct}`, { replace: true });
     console.log('selectedProduct::: ', selectedProduct)
     if (intervalRef.current.previousId !== null) {
       clearInterval(intervalRef.current.previousId)
