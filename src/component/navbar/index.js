@@ -87,7 +87,6 @@ const Navbar = () => {
         if (response.status === 401) {
           clearInterval(intervalRef.current.currentId)
           clearInterval(intervalRef.current.previousId)
-          navigate('/login')
         }
         if (!response.ok) {
           clearInterval(intervalRef.current.currentId)
