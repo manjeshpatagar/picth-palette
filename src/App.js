@@ -3,7 +3,7 @@ import Login from "./component/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Embbeded from "./pages/Embbeded";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 const App = () => {
   return (
     <BrowserRouter>
