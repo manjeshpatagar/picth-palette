@@ -1,7 +1,6 @@
 import React, { useEffect, useState, Suspense, useRef } from "react";
 import "./index.css";
-import searchIcon from "./images/searchbar.png";
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber'
 import { useLoader } from '@react-three/fiber'
 
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
@@ -13,12 +12,15 @@ import fridge from "./images/fridge.png";
 import headphone from "./images/headphone.png";
 
 import { useNavigate } from 'react-router-dom';
+import { Button } from "react-bootstrap";
+import AlertComp from "../AlertComp";
 
 
 const Navbar = () => {
   const navigate = useNavigate();
-
-  const [selectedProduct, setSelectedProduct] = useState();
+  const [shouldShowToast, setShouldShowToast] = useState(false)
+  const [clipboardAlertText, setClipboardAlertText] = useState('')
+  const [selectedProduct, setSelectedProduct] = useState('48fb1367-0396-442b-8203-0b339bcecbd5');
   const [products, setProducts] = useState([]);
   const [tmpProducts, settmpProducts] = useState([]);
   const meshRef = useRef()
@@ -32,38 +34,58 @@ const Navbar = () => {
     }
   }, [selectedProduct])
 
+  function copyToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      // naviƒ¸gator.clipboard API method
+      return navigator.clipboard.writeText(text).then(function () {
+        setClipboardAlertText('Text copied to clipboard successfully!');
+      }, function (err) {
+        setClipboardAlertText('Could not copy text: ', err);
+      });
+    }
+  }
+
   const renderContent = (product) => {
     return (
       <div>
+
+        {/* selectedProduct:{(JSON.stringify(selectedProduct))} */}
         {selectedProduct
           ? <div>
-            {/* Product:{(JSON.stringify(product.s3path))} */}
-            {
-              <Suspense fallback={<div>Loading</div>}>
-                <div style={{ textAlign: 'left' }}>
+            {/* Product:{(JSON.stringify(product))} */}
+            {/* { */}
+            <Suspense fallback={<div>Loading</div>}>
+              <div style={{
+                display: 'grid',
+                gridTemplateAreas:
+                  `'desc button'
+                   'desc .'`,
+                justifyContent: 'space-between'
+              }}>
+                <div style={{ textAlign: 'left', gridArea: 'desc' }}>
                   <p><strong>Title:</strong> {product?.name}</p>
                   <p><strong>Description:</strong> {product?.description}</p>
                 </div>
+                <div style={{ gridArea: 'button' }}>
+                  <Button onClick={() => {
+                    setShouldShowToast(true)
+                    setTimeout(() => setShouldShowToast(false), 3000)
+                    copyToClipboard(window.location.origin + `/embed/${selectedProduct}`)
+                    console.log('asdfasfd')
+                  }}>Embed Link</Button>
+                </div>
+              </div>
+              {product && product.s3path &&
                 <Canvas style={{ width: 600, height: 500, border: '1px solid red' }}>
                   <ambientLight intensity={Math.PI / 5} />
                   <spotLight position={[0, -100, -300]} angle={0.10} penumbra={1} decay={0} intensity={Math.PI} />
                   <pointLight position={[0, -100, -300]} decay={0} intensity={Math.PI} />
-                  {/* <Box position={[0, 0, -100]} /> */}
                   <Scene position={[product?.["3dConfig"]?.x ?? 0.1, product?.["3dConfig"]?.y ?? -170, product?.["3dConfig"]?.z ?? -340]}
                     path={product.s3path} scale={product?.["3dConfig"]?.scale ?? 0.5} />
 
-                </Canvas>
-                {/* <div>
-                  <button onClick={e => { meshRef.current.rotation.x += 0.01 }}>+</button>
-                  <button onClick={e => { meshRef.current.rotation.x -= 0.01 }}>-</button>
-                  <button onClick={e => { meshRef.current.position.z -= 10 }}>z</button>
-                  <button onClick={e => { meshRef.current.position.x -= 10 }}>x</button>
-                  <button onClick={e => { meshRef.current.position.y -= 10 }}>y</button>
-                  <button onClick={e => { meshRef.current.rotation.x -= 0.01 }}>-</button>
-
-                </div> */}
-              </Suspense>
-            }
+                </Canvas>}
+            </Suspense>
+            {/* } */}
           </div>
           : "Please select a product."}
       </div>
@@ -228,34 +250,38 @@ const Navbar = () => {
   ];
 
   useEffect(() => {
-    settmpProducts([...products, { id: 1, name: "pot", s3path: "/pot.fbx", description: "flower pot. Show plant!!!" }])
+    settmpProducts([...products])
   }, [products])
   return (
+    <>
+      <div style={{ position: 'relative', width: "calc(100vw - 2.5rem)" }}>
+        <AlertComp open={shouldShowToast} text={clipboardAlertText} setOpen={setShouldShowToast} />
 
-    <div
-      className="container"
-      style={{
-        margin: "5rem 0 0 5rem",
-        width: "100%"
-      }}
-    >
-      <div className="sidebar">
+        <div
+          className="container"
+          style={{
+            margin: "5rem 0 0 5rem",
 
-        <div className="product-list">
-          {/* {JSON.stringify([...products, { id: 1, name: "pot", s3path: "/pot.fbx" }])} */}
-          {tmpProducts.map((product) => (
-            <ProductItem
-              selectedProduct={selectedProduct}
-              key={product.id}
-              product={product}
-              setSelectedProduct={setSelectedProduct}
-            />
-          ))}
+          }}
+        >
+          <div className="sidebar">
+            <div className="product-list">
+              {/* {JSON.stringify([...products, { id: 1, name: "pot", s3path: "/pot.fbx" }])} */}
+              {tmpProducts.map((product) => (
+                <ProductItem
+                  selectedProduct={selectedProduct}
+                  key={product.id}
+                  product={product}
+                  setSelectedProduct={setSelectedProduct}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="content">{renderContent(tmpProducts.filter(d => d.id === selectedProduct)[0])}</div>
         </div>
       </div>
-
-      <div className="content">{renderContent(tmpProducts.filter(d => d.id === selectedProduct)[0])}</div>
-    </div>
+    </>
   );
 };
 

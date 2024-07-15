@@ -15,10 +15,10 @@ const Login = () => {
     console.log('Password:', password);
 
     const loginData = {
-      // "username": "ameya@gmail.com",
-      // "password": "Password@1"
-      "username": email,
-      "password": password
+      body: {
+        "username": email,
+        "password": password
+      }
     };
 
     fetch('https://01036p2kcg.execute-api.ap-south-1.amazonaws.com/dev/login', {

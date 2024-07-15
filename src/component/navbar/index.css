@@ -84,6 +84,7 @@
   /* margin-top: 50px; */
   display: flex;
   flex-direction: column;
+  gap: 12px;
 }
 
 .sidebar button {
@@ -130,6 +131,7 @@
   padding: 20px;
   flex-grow: 1;
   text-align: center;
+  max-width: 600px;
 }
 
 .search-bar input:focus {
